@@ -18,37 +18,7 @@
         app:layout_constraintVertical_bias="0.047" />
 
     <EditText
-        android:id="@+id/etIdent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="Identificación"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvVendedores"
-        app:layout_constraintVertical_bias="0.05"
-        />
-
-    <EditText
-        android:id="@+id/etfullname"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="Nombre completo"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etIdent"
-        app:layout_constraintVertical_bias="0.018"
-        />
-
-    <EditText
-        android:id="@+id/etemail"
+        android:id="@+id/etEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -58,24 +28,52 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etfullname"
-        app:layout_constraintVertical_bias="0.03"
+        app:layout_constraintTop_toBottomOf="@+id/tvVendedores"
+        app:layout_constraintVertical_bias="0.05"
         />
 
     <EditText
-        android:id="@+id/etpassword"
+        android:id="@+id/etname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textPassword"
-        android:hint="Password"
+        android:inputType="textPersonName"
+        android:hint="Name"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etemail"
-        app:layout_constraintVertical_bias="0.027"
+        app:layout_constraintTop_toBottomOf="@+id/etEmail"
+        app:layout_constraintVertical_bias="0.018"
         />
+
+    <EditText
+        android:id="@+id/etPhone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="phone"
+        android:hint="Phone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etname"
+        app:layout_constraintVertical_bias="0.03"
+        />
+
+    <TextView
+        android:id="@+id/etTotalCommision"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:text="Total commision: "
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.935"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etPhone"
+        app:layout_constraintVertical_bias="0.044" />
 
     <Button
         android:id="@+id/btnsave"
@@ -86,8 +84,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etpassword"
+        app:layout_constraintTop_toBottomOf="@+id/etTotalCommision"
         app:layout_constraintVertical_bias="0.042"
+        app:cornerRadius="20dp"
+        android:backgroundTint="#3F51B5"
         />
 
     <Button
@@ -99,8 +99,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.355"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etpassword"
+        app:layout_constraintTop_toBottomOf="@+id/etTotalCommision"
         app:layout_constraintVertical_bias="0.042"
+        app:cornerRadius="20dp"
+        android:backgroundTint="#03A9F4"
         />
 
     <Button
@@ -112,8 +114,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.662"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etpassword"
+        app:layout_constraintTop_toBottomOf="@+id/etTotalCommision"
         app:layout_constraintVertical_bias="0.042"
+        app:cornerRadius="20dp"
+        android:backgroundTint="#05A608"
         />
 
     <Button
@@ -125,8 +129,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.977"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etpassword"
+        app:layout_constraintTop_toBottomOf="@+id/etTotalCommision"
         app:layout_constraintVertical_bias="0.042"
+        app:cornerRadius="20dp"
+        android:backgroundTint="#F40303"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
