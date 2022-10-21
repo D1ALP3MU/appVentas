@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     String idSeller; // Variable que contendrá el id de cada cliente
 
     EditText email, name, phone;
+    int comision = 0;
     TextView totalCommision;
 
     @SuppressLint({"MissingInflatedId", "LocalSuppress"})
@@ -212,7 +213,7 @@ public class MainActivity extends AppCompatActivity {
                                         email.setText("");
                                         name.setText("");
                                         phone.setText("");
-                                        email.requestFocus(); //Enviar el foco al ident
+                                        email.requestFocus(); //Enviar el foco al email
 
                                     }
                                 })
