@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     int comision = 0;
     TextView totalCommision;
 
+
     @SuppressLint({"MissingInflatedId", "LocalSuppress"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
             .addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
-                    Toast.makeText(MainActivity.this,"Vendedor actualizado correctmente...",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this,"Vendedor actualizado correctamente...",Toast.LENGTH_SHORT).show();
 
                     // Vaciar las cajas de texto
                     email.setText("");
@@ -195,6 +196,7 @@ public class MainActivity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
                     if (task.isSuccessful()) {
                         if (task.getResult().isEmpty()) { // Si no encuentra el documento
+                            //sTotalCommision.setText("0");
                             // Guardar los datos del vendedor (seller)
                             Map<String, Object> seller = new HashMap<>(); // Tabla cursor
                             seller.put("Email", sEmail);
