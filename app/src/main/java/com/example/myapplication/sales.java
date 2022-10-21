@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import static android.content.ContentValues.TAG;
 import static java.lang.Double.parseDouble;
 import static java.lang.Integer.parseInt;
 
@@ -9,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,6 +22,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -31,7 +34,7 @@ public class sales extends AppCompatActivity {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     EditText emailSale, dateSale, saleValue;
-    int valorVentas;
+    int valorVentas, comision;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -60,57 +63,77 @@ public class sales extends AppCompatActivity {
             }
         });
     }
-
     private void saveSale(String sEmailSale, String sDateSale, String SsaleValue) {
         valorVentas = parseInt(saleValue.getText().toString());
         // Buscar la identificación del vendedor
-        db.collection("seller")
-                .whereEqualTo("Email", sEmailSale)
-                .get()
+        db.collection("seller").whereEqualTo("Email", sEmailSale).get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            if (!task.getResult().isEmpty()) { // Si lo encuentra el documento
-                                if (valorVentas > 10000000){
-                                    // Guardar los datos de la venta (sales)
-                                    Map<String, Object> sales = new HashMap<>(); // Tabla cursor
-                                    sales.put("Email", sEmailSale);
-                                    sales.put("Date", sDateSale);
-                                    sales.put("Salevalue", SsaleValue);
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if (task.isSuccessful()) {
+                        if (!task.getResult().isEmpty()) { // Si lo encuentra el email
+                            if (valorVentas > 10000000){
 
-                                    db.collection("sales")
-                                        .add(sales)
-                                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                            @Override
-                                            public void onSuccess(DocumentReference documentReference) {
-                                                Toast.makeText(getApplicationContext(), "Venta agregada con éxito...", Toast.LENGTH_SHORT).show();
+                                // Guardar los datos de la venta (sales)
+                                Map<String, Object> sales = new HashMap<>(); // Tabla cursor
+                                sales.put("Email", sEmailSale);
+                                sales.put("Date", sDateSale);
+                                sales.put("Salevalue", SsaleValue);
+                                comision = valorVentas * 2 / 100;
+                                // para vendedores
+                                Map<String, Object> seller = new HashMap<>(); // Tabla cursor
+                                seller.put("Total Commision", comision);
 
-                                                //Limpiar las cajas de texto
-                                                emailSale.setText("");
-                                                dateSale.setText("");
-                                                saleValue.setText("");
-                                                emailSale.requestFocus(); //Enviar el foco al email
-
-                                            }
-                                        })
-                                        .addOnFailureListener(new OnFailureListener() {
-                                            @Override
-                                            public void onFailure(@NonNull Exception e) {
-                                                Toast.makeText(getApplicationContext(), "Error! la venta no se agregó...", Toast.LENGTH_SHORT).show();
-                                            }
-                                        });
-                                } else {
-                                    Toast.makeText(getApplicationContext(), "El valor de la venta debe ser superior a 10 millones", Toast.LENGTH_SHORT).show();
-                                }
-
+                                db.collection("sales")
+                                    .add(sales)
+                                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                        @Override
+                                        public void onSuccess(DocumentReference documentReference) {
+                                            //editarComision(sEmailSale,comision);
+                                            Toast.makeText(getApplicationContext(), "Venta agregada con éxito..." + comision, Toast.LENGTH_SHORT).show();
+                                            //Limpiar las cajas de texto
+                                            emailSale.setText("");
+                                            dateSale.setText("");
+                                            saleValue.setText("");
+                                            emailSale.requestFocus(); //Enviar el foco al email
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Toast.makeText(getApplicationContext(), "Error! la venta no se agregó...", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                            } else {
+                                Toast.makeText(getApplicationContext(), "El valor de la venta debe ser superior a 10 millones", Toast.LENGTH_SHORT).show();
                             }
-                            else
-                            {
-                                Toast.makeText(getApplicationContext(),"El Email del vendedor no existe, inténtelo nuevamente",Toast.LENGTH_SHORT).show();
-                            }
+
+                        }
+                        else
+                        {
+                            Toast.makeText(getApplicationContext(),"El Email del vendedor no existe, inténtelo nuevamente",Toast.LENGTH_SHORT).show();
                         }
                     }
-                });
+                }
+            });
     }
+    /*public void editarComision(String sEmailSale, int comision){
+
+        DocumentReference docRef = db.collection("seller").document(sEmailSale);
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                    } else {
+                        Log.d(TAG, "No such document");
+                    }
+                } else {
+                    Log.d(TAG, "get failed with ", task.getException());
+                }
+            }
+        });
+    }*/
 }

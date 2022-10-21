@@ -91,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
 
                         @Override
                         public void onClick(DialogInterface arg0, int arg1) {
+
                             // Se eliminará el vendedor con el email respectivo
                             db.collection("seller").document(idSeller)
                                 .delete()
@@ -114,7 +115,6 @@ public class MainActivity extends AppCompatActivity {
                                 });
                         }
                     });
-
                 alertDialogBuilder.setNegativeButton("No",
                     new DialogInterface.OnClickListener() {
 
@@ -123,12 +123,10 @@ public class MainActivity extends AppCompatActivity {
 
                         }
                     });
-
                 AlertDialog alertDialog = alertDialogBuilder.create();
                 alertDialog.show();
             }
         });
-
     }
 
     private void editSeller(String sEmail, String sName, String sPhone) {

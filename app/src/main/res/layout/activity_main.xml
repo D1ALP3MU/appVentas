@@ -69,20 +69,19 @@
         />
 
     <TextView
-        android:id="@+id/etTotalCommision"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/tvTotalCommision"
+        android:layout_width="129dp"
+        android:layout_height="23dp"
         android:ems="10"
         android:text="Total commision: "
         android:textColor="@color/black"
         android:textSize="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.971"
+        app:layout_constraintHorizontal_bias="0.056"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etPhone"
-        app:layout_constraintVertical_bias="0.091"
-        />
+        app:layout_constraintVertical_bias="0.101" />
 
     <Button
         android:id="@+id/btnsave"
@@ -171,5 +170,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnsearch"
         app:layout_constraintVertical_bias="0.191" />
+
+    <EditText
+        android:id="@+id/etTotalCommision"
+        android:layout_width="203dp"
+        android:layout_height="41dp"
+        android:ems="10"
+        android:inputType="number"
+        android:hint="0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.697"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etPhone"
+        app:layout_constraintVertical_bias="0.069" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
