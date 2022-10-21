@@ -20,7 +20,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.076" />
+        app:layout_constraintVertical_bias="0.076"
+        />
 
     <EditText
         android:id="@+id/etEmail"
@@ -74,6 +75,7 @@
         android:ems="10"
         android:text="Total commision: "
         android:textColor="@color/black"
+        android:textSize="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.971"
@@ -154,6 +156,20 @@
         app:layout_constraintTop_toBottomOf="@+id/tvVendedores"
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/ic_baseline_person_add_alt_1_24"
+        />
+
+    <TextView
+        android:id="@+id/reglinkVentas"
+        android:layout_width="101dp"
+        android:layout_height="19dp"
+        android:text="Ir a ventas"
+        android:textColor="#0A25BC"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnsearch"
+        app:layout_constraintVertical_bias="0.189"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

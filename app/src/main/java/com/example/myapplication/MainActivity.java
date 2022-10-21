@@ -4,7 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -32,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     EditText email, name, phone;
     TextView totalCommision;
 
+    @SuppressLint({"MissingInflatedId", "LocalSuppress"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +48,14 @@ public class MainActivity extends AppCompatActivity {
         Button btnSearchSeller = findViewById(R.id.btnsearch);
         Button btnEditSeller = findViewById(R.id.btnedit);
         Button btnDeleteSeller = findViewById(R.id.btndelete);
+        TextView reglinkSales = findViewById(R.id.reglinkVentas);
+
+        reglinkSales.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), sales.class));
+            }
+        });
 
         btnSaveSeller.setOnClickListener(new View.OnClickListener() {
             @Override
