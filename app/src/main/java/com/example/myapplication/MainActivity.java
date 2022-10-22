@@ -212,11 +212,12 @@ public class MainActivity extends AppCompatActivity {
                         if (task.getResult().isEmpty()) { // Si no encuentra el documento
                             //sTotalCommision.setText("0");
                             // Guardar los datos del vendedor (seller)
-                            Map<String, Object> seller = new HashMap<>(); // Tabla cursor
+                            Map<String, String> seller = new HashMap<>(); // Tabla cursor
                             seller.put("Email", sEmail);
                             seller.put("name", sName);
                             seller.put("Phone", sPhone);
-                            seller.put("Total Commision", sTotalCommision);
+                            String var = "0";
+                            seller.put("Total Commision", var);
 
                             db.collection("seller")
                                 .add(seller)

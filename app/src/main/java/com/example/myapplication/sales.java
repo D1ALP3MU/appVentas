@@ -24,9 +24,13 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class sales extends AppCompatActivity {
@@ -112,23 +116,33 @@ public class sales extends AppCompatActivity {
             }
         });
     }
-    /*public void editarComision(String sEmailSale, int comision){
+    /*public void editarComision(String sEmailSale, int comision) {
 
-        DocumentReference docRef = db.collection("seller").document(sEmailSale);
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        Log.d(TAG, "DocumentSnapshot data: " + document.getData());
-                    } else {
-                        Log.d(TAG, "No such document");
+        db.collection("seller")
+                .whereEqualTo("Email", sEmailSale)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                List lista = new ArrayList();
+                                //Map<String, String> sales = new String<Integer, String>(); // Tabla cursor
+                                Map<String, String> sales = new HashMap<>(); // Tabla cursor
+                                sales = document.get("Total Commision");
+                                //String valor = sales.get(K "Total Commision");
+                                Collection<Object> collectionValues = sales.values();
+                                for(Object s: collectionValues){
+                                    System.out.println(s);
+                                }
+                                //Log.d(TAG, document.getId() + " =>PERRA" + valor + "aca esta el valor dentro");
+                            }
+
+
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
                     }
-                } else {
-                    Log.d(TAG, "get failed with ", task.getException());
-                }
-            }
-        });
-    }*/
-}
+                });
+        }*/
+    }
