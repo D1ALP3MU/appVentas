@@ -67,23 +67,19 @@ public class sales extends AppCompatActivity {
         valorVentas = parseInt(saleValue.getText().toString());
         // Buscar la identificación del vendedor
         db.collection("seller").whereEqualTo("Email", sEmailSale).get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                    if (task.isSuccessful()) {
-                        if (!task.getResult().isEmpty()) { // Si lo encuentra el email
-                            if (valorVentas > 10000000){
-
-                                // Guardar los datos de la venta (sales)
-                                Map<String, Object> sales = new HashMap<>(); // Tabla cursor
-                                sales.put("Email", sEmailSale);
-                                sales.put("Date", sDateSale);
-                                sales.put("Salevalue", SsaleValue);
-                                comision = valorVentas * 2 / 100;
-                                // para vendedores
-                                Map<String, Object> seller = new HashMap<>(); // Tabla cursor
-                                seller.put("Total Commision", comision);
-
+            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    if (!task.getResult().isEmpty()) { // Si lo encuentra el email
+                        if (valorVentas > 10000000){
+                            // Guardar los datos de la venta (sales)
+                            Map<String, Object> sales = new HashMap<>(); // Tabla cursor
+                            sales.put("Email", sEmailSale);
+                            sales.put("Date", sDateSale);
+                            sales.put("Salevalue", SsaleValue);
+                            comision = valorVentas * 2 / 100;
+                            // para vendedores
                                 db.collection("sales")
                                     .add(sales)
                                     .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
@@ -104,18 +100,17 @@ public class sales extends AppCompatActivity {
                                             Toast.makeText(getApplicationContext(), "Error! la venta no se agregó...", Toast.LENGTH_SHORT).show();
                                         }
                                     });
-                            } else {
-                                Toast.makeText(getApplicationContext(), "El valor de la venta debe ser superior a 10 millones", Toast.LENGTH_SHORT).show();
-                            }
-
-                        }
-                        else
-                        {
-                            Toast.makeText(getApplicationContext(),"El Email del vendedor no existe, inténtelo nuevamente",Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getApplicationContext(), "El valor de la venta debe ser superior a 10 millones", Toast.LENGTH_SHORT).show();
                         }
                     }
+                    else
+                    {
+                        Toast.makeText(getApplicationContext(),"El Email del vendedor no existe, inténtelo nuevamente",Toast.LENGTH_SHORT).show();
+                    }
                 }
-            });
+            }
+        });
     }
     /*public void editarComision(String sEmailSale, int comision){
 
