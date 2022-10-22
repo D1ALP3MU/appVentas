@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
     EditText email, name, phone;
     int comision = 0;
-    TextView totalCommision;
+    EditText totalCommision;
 
 
     @SuppressLint({"MissingInflatedId", "LocalSuppress"})
@@ -45,12 +45,14 @@ public class MainActivity extends AppCompatActivity {
         email = (EditText) findViewById(R.id.etEmail);
         name = (EditText) findViewById(R.id.etname);
         phone = (EditText) findViewById(R.id.etPhone);
-        totalCommision = (TextView) findViewById(R.id.etTotalCommision);
+        totalCommision = (EditText) findViewById(R.id.etTotalCommision);
         Button btnSaveSeller = findViewById(R.id.btnsave);
         Button btnSearchSeller = findViewById(R.id.btnsearch);
         Button btnEditSeller = findViewById(R.id.btnedit);
         Button btnDeleteSeller = findViewById(R.id.btndelete);
         TextView reglinkSales = findViewById(R.id.reglinkVentas);
+
+        totalCommision.setFocusable(false);
 
         reglinkSales.setOnClickListener(new View.OnClickListener() {
             @Override
