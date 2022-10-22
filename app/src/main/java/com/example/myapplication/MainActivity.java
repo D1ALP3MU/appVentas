@@ -90,29 +90,43 @@ public class MainActivity extends AppCompatActivity {
                 alertDialogBuilder.setMessage("¿ Está seguro de eliminar el vendedor con Email: " + email.getText().toString() + " ?");
                 alertDialogBuilder.setPositiveButton("Sí",
                     new DialogInterface.OnClickListener() {
-
                         @Override
                         public void onClick(DialogInterface arg0, int arg1) {
-
-                            // Se eliminará el vendedor con el email respectivo
-                            db.collection("seller").document(idSeller)
-                                .delete()
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            // Validar si el vendedor tiene ventas registradas
+                            db.collection("sales")
+                                .whereEqualTo("Email", email.getText().toString())
+                                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                     @Override
-                                    public void onSuccess(Void aVoid) {
-                                        Toast.makeText(MainActivity.this,"Vendedor borrado correctamente...",Toast.LENGTH_SHORT).show();
+                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                        if (task.isSuccessful()) {
+                                            if (!task.getResult().isEmpty()) { // Si encontró el documento
+                                                Toast.makeText(getApplicationContext(),"No es posible eliminar el vendedor...",Toast.LENGTH_SHORT).show();
+                                            }
+                                            else
+                                            {
+                                                // Se eliminará el vendedor con el email respectivo
+                                                db.collection("seller").document(idSeller)
+                                                    .delete()
+                                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                        @Override
+                                                        public void onSuccess(Void aVoid) {
+                                                            Toast.makeText(MainActivity.this,"Vendedor borrado correctamente...",Toast.LENGTH_SHORT).show();
 
-                                        //Limpiar las cajas de texto
-                                        email.setText("");
-                                        name.setText("");
-                                        phone.setText("");
-                                        email.requestFocus(); //Enviar el foco al ident
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Toast.makeText(getApplicationContext(),"Error: " + e.getMessage(),Toast.LENGTH_SHORT).show();
+                                                            //Limpiar las cajas de texto
+                                                            email.setText("");
+                                                            name.setText("");
+                                                            phone.setText("");
+                                                            email.requestFocus(); //Enviar el foco al ident
+                                                        }
+                                                    })
+                                                    .addOnFailureListener(new OnFailureListener() {
+                                                        @Override
+                                                        public void onFailure(@NonNull Exception e) {
+                                                            Toast.makeText(getApplicationContext(),"Error: " + e.getMessage(),Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    });
+                                            }
+                                        }
                                     }
                                 });
                         }
