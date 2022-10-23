@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:background="#9CBFEC"
+    android:background="#D1E0F3"
     >
 
     <TextView
@@ -163,7 +163,7 @@
         android:layout_height="19dp"
         android:text="Ir a ventas"
         android:textColor="#0A25BC"
-        android:textSize="15dp"
+        android:textSize="18dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.554"

@@ -32,9 +32,10 @@ public class MainActivity extends AppCompatActivity {
     String idSeller; // Variable que contendrá el id de cada cliente
 
     EditText email, name, phone;
+    Button btnSaveSeller, btnSearchSeller, btnEditSeller, btnDeleteSeller;
+
     int comision = 0;
     EditText totalCommision;
-
 
     @SuppressLint({"MissingInflatedId", "LocalSuppress"})
     @Override
@@ -46,11 +47,15 @@ public class MainActivity extends AppCompatActivity {
         name = (EditText) findViewById(R.id.etname);
         phone = (EditText) findViewById(R.id.etPhone);
         totalCommision = (EditText) findViewById(R.id.etTotalCommision);
-        Button btnSaveSeller = findViewById(R.id.btnsave);
-        Button btnSearchSeller = findViewById(R.id.btnsearch);
-        Button btnEditSeller = findViewById(R.id.btnedit);
-        Button btnDeleteSeller = findViewById(R.id.btndelete);
+        btnSaveSeller = (Button) findViewById(R.id.btnsave);
+        btnSearchSeller = (Button) findViewById(R.id.btnsearch);
+        btnEditSeller = (Button) findViewById(R.id.btnedit);
+        btnDeleteSeller = (Button) findViewById(R.id.btndelete);
         TextView reglinkSales = findViewById(R.id.reglinkVentas);
+
+        // Deshabilitamos los botones editar y eliminar
+        btnEditSeller.setEnabled(false);
+        btnDeleteSeller.setEnabled(false);
 
         totalCommision.setFocusable(false);
 
@@ -116,6 +121,10 @@ public class MainActivity extends AppCompatActivity {
                                                             name.setText("");
                                                             phone.setText("");
                                                             email.requestFocus(); //Enviar el foco al ident
+
+                                                            // Inhabilitamos los botones editar y eliminar
+                                                            btnEditSeller.setEnabled(false);
+                                                            btnDeleteSeller.setEnabled(false);
                                                         }
                                                     })
                                                     .addOnFailureListener(new OnFailureListener() {
@@ -171,6 +180,10 @@ public class MainActivity extends AppCompatActivity {
                     phone.setText("");
                     totalCommision.setText("");
                     email.requestFocus(); //Enviar el foco al Email
+
+                    // Inhabilitamos los botones editar y eliminar
+                    btnEditSeller.setEnabled(false);
+                    btnDeleteSeller.setEnabled(false);
                 }
             })
             .addOnFailureListener(new OnFailureListener() {
@@ -188,21 +201,29 @@ public class MainActivity extends AppCompatActivity {
             .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                    if (task.isSuccessful()) {
-                        if (!task.getResult().isEmpty()) { // Si encontró el documento
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                idSeller = document.getId();
-                                Toast.makeText(getApplicationContext(),"ID seller: " + idSeller, Toast.LENGTH_LONG).show();
-                                email.setText(document.getString("Email"));
-                                name.setText(document.getString("name"));
-                                phone.setText(document.getString("Phone"));
-                                totalCommision.setText(document.getString("Total Commision"));
+                    if(!sEmail.isEmpty()){
+                        if (task.isSuccessful()) {
+                            if (!task.getResult().isEmpty()) { // Si encontró el documento
+                                // Habilitamos los botones editar y eliminar
+                                btnEditSeller.setEnabled(true);
+                                btnDeleteSeller.setEnabled(true);
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    idSeller = document.getId();
+                                    Toast.makeText(getApplicationContext(),"ID seller: " + idSeller, Toast.LENGTH_LONG).show();
+                                    email.setText(document.getString("Email"));
+                                    name.setText(document.getString("name"));
+                                    phone.setText(document.getString("Phone"));
+                                    totalCommision.setText(document.getString("Total Commision"));
+                                }
+                            }
+                            else {
+                                Toast.makeText(getApplicationContext(),"El Email del vendedor no existe...",Toast.LENGTH_SHORT).show();
                             }
                         }
-                        else {
-                            Toast.makeText(getApplicationContext(),"El Email del vendedor no existe...",Toast.LENGTH_SHORT).show();
-                        }
+                    } else {
+                        Toast.makeText(getApplicationContext(),"Debe llenar los campos requeridos.",Toast.LENGTH_SHORT).show();
                     }
+
                 }
             });
     }
@@ -217,36 +238,40 @@ public class MainActivity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
                     if (task.isSuccessful()) {
                         if (task.getResult().isEmpty()) { // Si no encuentra el documento
-                            //sTotalCommision.setText("0");
-                            // Guardar los datos del vendedor (seller)
-                            Map<String, String> seller = new HashMap<>(); // Tabla cursor
-                            seller.put("Email", sEmail);
-                            seller.put("name", sName);
-                            seller.put("Phone", sPhone);
-                            String var = "0";
-                            seller.put("Total Commision", var);
+                            if (!sEmail.isEmpty() && !sName.isEmpty() && !sPhone.isEmpty()){
+                                // Guardar los datos del vendedor (seller)
+                                Map<String, String> seller = new HashMap<>(); // Tabla cursor
+                                seller.put("Email", sEmail);
+                                seller.put("name", sName);
+                                seller.put("Phone", sPhone);
+                                String var = "0";
+                                seller.put("Total Commision", var);
 
-                            db.collection("seller")
-                                .add(seller)
-                                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                    @Override
-                                    public void onSuccess(DocumentReference documentReference) {
-                                        Toast.makeText(getApplicationContext(), "Vendedor agregado con éxito...", Toast.LENGTH_SHORT).show();
+                                db.collection("seller")
+                                    .add(seller)
+                                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                        @Override
+                                        public void onSuccess(DocumentReference documentReference) {
+                                            Toast.makeText(getApplicationContext(), "Vendedor agregado con éxito...", Toast.LENGTH_SHORT).show();
 
-                                        //Limpiar las cajas de texto
-                                        email.setText("");
-                                        name.setText("");
-                                        phone.setText("");
-                                        email.requestFocus(); //Enviar el foco al email
+                                            //Limpiar las cajas de texto
+                                            email.setText("");
+                                            name.setText("");
+                                            phone.setText("");
+                                            email.requestFocus(); //Enviar el foco al email
 
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Toast.makeText(getApplicationContext(), "Error! el vendedor no se agregó...", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Toast.makeText(getApplicationContext(), "Error! el vendedor no se agregó...", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+
+                            } else {
+                                Toast.makeText(getApplicationContext(), "Debe llenar los campos requeridos.", Toast.LENGTH_SHORT).show();
+                            }
                         }
                         else {
                             Toast.makeText(getApplicationContext(),"El Email del vendedor ya existe, inténtelo con otro",Toast.LENGTH_SHORT).show();

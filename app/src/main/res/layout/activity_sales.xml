@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".sales"
-    android:background="#9CB7EC"
+    android:background="#D1E0F3"
     >
 
     <TextView
@@ -77,7 +77,7 @@
         app:cornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.238"
+        app:layout_constraintHorizontal_bias="0.183"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etsaleValue"
         app:layout_constraintVertical_bias="0.114" />
@@ -98,17 +98,16 @@
 
     <TextView
         android:id="@+id/reglinkSeller"
-        android:layout_width="106dp"
-        android:layout_height="24dp"
+        android:layout_width="155dp"
+        android:layout_height="28dp"
         android:text="Ir a vendedores"
         android:textColor="#0728CC"
-        android:textSize="15dp"
+        android:textSize="18dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.855"
+        app:layout_constraintHorizontal_bias="0.937"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etsaleValue"
-        app:layout_constraintVertical_bias="0.158"
-        />
+        app:layout_constraintVertical_bias="0.147" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

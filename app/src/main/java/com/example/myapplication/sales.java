@@ -77,35 +77,39 @@ public class sales extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
-                    if (!task.getResult().isEmpty()) { // Si lo encuentra el email
+                    if (!task.getResult().isEmpty()) { // Si encuentra el email
+                        // Condicional para validar el monto de la venta que sea superior a 10 millones
                         if (valorVentas > 10000000){
                             // Guardar los datos de la venta (sales)
                             Map<String, Object> sales = new HashMap<>(); // Tabla cursor
                             sales.put("Email", sEmailSale);
                             sales.put("Date", sDateSale);
                             sales.put("Salevalue", SsaleValue);
+
+                            //Se calcula la comisión para llevarla al vendedor
                             comision = valorVentas * 2 / 100;
+
                             // para vendedores
-                                db.collection("sales")
-                                    .add(sales)
-                                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                        @Override
-                                        public void onSuccess(DocumentReference documentReference) {
-                                            editCommision(sEmailSale,comision);
-                                            Toast.makeText(getApplicationContext(), "Venta agregada con éxito..." + comision, Toast.LENGTH_SHORT).show();
-                                            //Limpiar las cajas de texto
-                                            emailSale.setText("");
-                                            dateSale.setText("");
-                                            saleValue.setText("");
-                                            emailSale.requestFocus(); //Enviar el foco al email
-                                        }
-                                    })
-                                    .addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            Toast.makeText(getApplicationContext(), "Error! la venta no se agregó...", Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
+                            db.collection("sales")
+                                .add(sales)
+                                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                    @Override
+                                    public void onSuccess(DocumentReference documentReference) {
+                                        editCommision(sEmailSale,comision);
+                                        Toast.makeText(getApplicationContext(), "Venta agregada con éxito..." + comision, Toast.LENGTH_SHORT).show();
+                                        //Limpiar las cajas de texto
+                                        emailSale.setText("");
+                                        dateSale.setText("");
+                                        saleValue.setText("");
+                                        emailSale.requestFocus(); //Enviar el foco al email
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(getApplicationContext(), "Error! la venta no se agregó...", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
                         } else {
                             Toast.makeText(getApplicationContext(), "El valor de la venta debe ser superior a 10 millones", Toast.LENGTH_SHORT).show();
                         }
@@ -121,7 +125,6 @@ public class sales extends AppCompatActivity {
 
     public void editCommision(String sEmailSale, int comision) {
         Map<String, Object> mseller = new HashMap<>();
-
         // extraer la commision
         db.collection("seller")
             .whereEqualTo("Email", sEmailSale)
@@ -160,7 +163,7 @@ public class sales extends AppCompatActivity {
     }
 
     public void saveCommision(Object s, String id){
-        // actualizar la comision
+        // actualizar la comision para guardarla en la colección seller
         db.collection("seller").document(id)
             .set(s)
             .addOnSuccessListener(new OnSuccessListener<Void>() {
