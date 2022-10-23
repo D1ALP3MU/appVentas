@@ -101,9 +101,8 @@ public class MainActivity extends AppCompatActivity {
                                         if (task.isSuccessful()) {
                                             if (!task.getResult().isEmpty()) { // Si encontró el documento
                                                 Toast.makeText(getApplicationContext(),"No es posible eliminar el vendedor...",Toast.LENGTH_SHORT).show();
-                                            }
-                                            else
-                                            {
+
+                                            } else {
                                                 // Se eliminará el vendedor con el email respectivo
                                                 db.collection("seller").document(idSeller)
                                                     .delete()
@@ -147,10 +146,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void editSeller(String sEmail, String sName, String sPhone, String sTotalCommision) {
 
-        if(sTotalCommision.isEmpty())
-        {
+        if(sTotalCommision.isEmpty()){
             sTotalCommision = "";
-        }else{
+        } else{
             sTotalCommision = totalCommision.getText().toString();
         }
 
@@ -171,6 +169,7 @@ public class MainActivity extends AppCompatActivity {
                     email.setText("");
                     name.setText("");
                     phone.setText("");
+                    totalCommision.setText("");
                     email.requestFocus(); //Enviar el foco al Email
                 }
             })
@@ -200,8 +199,7 @@ public class MainActivity extends AppCompatActivity {
                                 totalCommision.setText(document.getString("Total Commision"));
                             }
                         }
-                        else
-                        {
+                        else {
                             Toast.makeText(getApplicationContext(),"El Email del vendedor no existe...",Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -250,8 +248,7 @@ public class MainActivity extends AppCompatActivity {
                                     }
                                 });
                         }
-                        else
-                        {
+                        else {
                             Toast.makeText(getApplicationContext(),"El Email del vendedor ya existe, inténtelo con otro",Toast.LENGTH_SHORT).show();
                         }
                     }
