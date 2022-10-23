@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         btnEditSeller.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                editSeller(email.getText().toString(), name.getText().toString(), phone.getText().toString());
+                editSeller(email.getText().toString(), name.getText().toString(), phone.getText().toString(), totalCommision.getText().toString());
             }
         });
 
@@ -145,11 +145,20 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void editSeller(String sEmail, String sName, String sPhone) {
+    private void editSeller(String sEmail, String sName, String sPhone, String sTotalCommision) {
+
+        if(sTotalCommision.isEmpty())
+        {
+            sTotalCommision = "";
+        }else{
+            sTotalCommision = totalCommision.getText().toString();
+        }
+
         Map<String, Object> mseller = new HashMap<>();
         mseller.put("Email", sEmail);
         mseller.put("name", sName);
         mseller.put("Phone", sPhone);
+        mseller.put("Total Commision", sTotalCommision);
 
         db.collection("seller").document(idSeller)
             .set(mseller)

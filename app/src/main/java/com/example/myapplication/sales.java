@@ -39,6 +39,7 @@ public class sales extends AppCompatActivity {
 
     EditText emailSale, dateSale, saleValue;
     int valorVentas, comision;
+    String idSeller;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -67,6 +68,7 @@ public class sales extends AppCompatActivity {
             }
         });
     }
+
     private void saveSale(String sEmailSale, String sDateSale, String SsaleValue) {
         valorVentas = parseInt(saleValue.getText().toString());
         // Buscar la identificación del vendedor
@@ -89,7 +91,7 @@ public class sales extends AppCompatActivity {
                                     .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                         @Override
                                         public void onSuccess(DocumentReference documentReference) {
-                                            //editarComision(sEmailSale,comision);
+                                            editCommision(sEmailSale,comision);
                                             Toast.makeText(getApplicationContext(), "Venta agregada con éxito..." + comision, Toast.LENGTH_SHORT).show();
                                             //Limpiar las cajas de texto
                                             emailSale.setText("");
@@ -116,33 +118,68 @@ public class sales extends AppCompatActivity {
             }
         });
     }
-    /*public void editarComision(String sEmailSale, int comision) {
 
+    public void editCommision(String sEmailSale, int comision) {
+        Map<String, Object> mseller = new HashMap<>();
+
+        // extraer la commision
         db.collection("seller")
-                .whereEqualTo("Email", sEmailSale)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                List lista = new ArrayList();
-                                //Map<String, String> sales = new String<Integer, String>(); // Tabla cursor
-                                Map<String, String> sales = new HashMap<>(); // Tabla cursor
-                                sales = document.get("Total Commision");
-                                //String valor = sales.get(K "Total Commision");
-                                Collection<Object> collectionValues = sales.values();
-                                for(Object s: collectionValues){
-                                    System.out.println(s);
-                                }
-                                //Log.d(TAG, document.getId() + " =>PERRA" + valor + "aca esta el valor dentro");
-                            }
+            .whereEqualTo("Email", sEmailSale)
+            .get()
+            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            idSeller = document.getId();
+                            Map<String, Object> seller = new HashMap<>();// Tabla cursor
+                            seller = document.getData();
 
+                            String mail = seller.get("Email").toString();
+                            String phone = seller.get("Phone").toString();
+                            String totalCommisionTemp =  seller.get("Total Commision").toString();
+                            String name = seller.get("name").toString();
 
-                        } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
+                            double totalCommisionVend = parseDouble(totalCommisionTemp);
+                            double newCommision = comision + totalCommisionVend;
+                            String val = String.valueOf(newCommision);
+
+                            mseller.put("Email", mail);
+                            mseller.put("Phone", phone);
+                            mseller.put("Total Commision", val);
+                            mseller.put("name", name);
+
+                            saveCommision(mseller,idSeller);
                         }
+
+                    } else {
+                        Log.d(TAG, "Error getting documents: ", task.getException());
                     }
-                });
-        }*/
+                }
+            });
+    }
+
+    public void saveCommision(Object s, String id){
+        // actualizar la comision
+        db.collection("seller").document(id)
+            .set(s)
+            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    Toast.makeText(sales.this,"Commision actualizada correctamente...",Toast.LENGTH_SHORT).show();
+
+                    // Vaciar las cajas de texto
+                    emailSale.setText("");
+                    dateSale.setText("");
+                    saleValue.setText("");
+                    emailSale.requestFocus(); //Enviar el foco al Email
+                }
+            })
+            .addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(sales.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
