@@ -99,6 +99,7 @@ public class sales extends AppCompatActivity {
                                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                     @Override
                                     public void onSuccess(DocumentReference documentReference) {
+                                        // Llamo el método editCommision
                                         editCommision(sEmailSale,comision);
                                         Toast.makeText(getApplicationContext(), "Venta agregada con éxito..." + comision, Toast.LENGTH_SHORT).show();
                                         //Limpiar las cajas de texto
@@ -156,6 +157,7 @@ public class sales extends AppCompatActivity {
                             mseller.put("Total Commision", val);
                             mseller.put("name", name);
 
+                            // Llamo el método saveCommision
                             saveCommision(mseller,idSeller);
                         }
 

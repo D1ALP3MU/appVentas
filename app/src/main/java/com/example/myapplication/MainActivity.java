@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
                                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                         @Override
                                                         public void onSuccess(Void aVoid) {
-                                                            Toast.makeText(MainActivity.this,"Vendedor borrado correctamente...",Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(MainActivity.this,"Vendedor correctamente...",Toast.LENGTH_SHORT).show();
 
                                                             //Limpiar las cajas de texto
                                                             email.setText("");
