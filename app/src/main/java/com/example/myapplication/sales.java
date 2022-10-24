@@ -64,7 +64,11 @@ public class sales extends AppCompatActivity {
         btnsaveSale.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveSale(emailSale.getText().toString(), dateSale.getText().toString(), saleValue.getText().toString());
+                if(!emailSale.getText().toString().isEmpty() && !dateSale.getText().toString().isEmpty() && !saleValue.getText().toString().isEmpty()){
+                    saveSale(emailSale.getText().toString(), dateSale.getText().toString(), saleValue.getText().toString());
+                } else {
+                    Toast.makeText(getApplicationContext(), "Debe llenar los campos requeridos...", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
