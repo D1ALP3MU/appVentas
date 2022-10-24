@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
                                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                         if (task.isSuccessful()) {
                                             if (!task.getResult().isEmpty()) { // Si encontró el documento
-                                                Toast.makeText(getApplicationContext(),"No es posible eliminar el vendedor...",Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(getApplicationContext(),"No es posible eliminar el vendedor porque tiene ventas registradas...",Toast.LENGTH_SHORT).show();
 
                                             } else {
                                                 // Se eliminará el vendedor con el email respectivo
@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
                                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                         @Override
                                                         public void onSuccess(Void aVoid) {
-                                                            Toast.makeText(MainActivity.this,"Vendedor correctamente...",Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(MainActivity.this,"Vendedor borrado correctamente...",Toast.LENGTH_SHORT).show();
 
                                                             //Limpiar las cajas de texto
                                                             email.setText("");
