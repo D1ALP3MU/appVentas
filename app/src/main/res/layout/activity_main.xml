@@ -92,11 +92,10 @@
         app:cornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.049"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etTotalCommision"
-        app:layout_constraintVertical_bias="0.201"
-        />
+        app:layout_constraintVertical_bias="0.201" />
 
     <Button
         android:id="@+id/btnsearch"
@@ -107,11 +106,10 @@
         app:cornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.355"
+        app:layout_constraintHorizontal_bias="0.349"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etTotalCommision"
-        app:layout_constraintVertical_bias="0.201"
-        />
+        app:layout_constraintVertical_bias="0.201" />
 
     <Button
         android:id="@+id/btnedit"
@@ -122,11 +120,10 @@
         app:cornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.671"
+        app:layout_constraintHorizontal_bias="0.653"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etTotalCommision"
-        app:layout_constraintVertical_bias="0.201"
-        />
+        app:layout_constraintVertical_bias="0.201" />
 
     <Button
         android:id="@+id/btndelete"
@@ -137,11 +134,10 @@
         app:cornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.977"
+        app:layout_constraintHorizontal_bias="0.95"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etTotalCommision"
-        app:layout_constraintVertical_bias="0.201"
-        />
+        app:layout_constraintVertical_bias="0.201" />
 
     <ImageView
         android:id="@+id/imageView"
